@@ -1,6 +1,7 @@
 package in.kamal.employee_management.service;
 
 import in.kamal.employee_management.entity.Employee;
+import in.kamal.employee_management.exceptions.ResourceNotFoundException;
 import in.kamal.employee_management.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,8 @@ public class EmployeeService {
     }
 
     public Employee getEmployeeId(Long id){
-        return employeeRepository.findById(Integer.valueOf(String.valueOf(id))).orElse(null);
+        return employeeRepository.findById(Integer.valueOf(String.valueOf(id)))
+                .orElseThrow(()->new ResourceNotFoundException("Employee not found"));
     }
 
     public Employee updateEmployee(Integer id, Employee employee) {
